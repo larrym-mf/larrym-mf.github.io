@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Adoption Survey | McLean Forrester</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #3B6E8F;
+    --primary-dark: #1B4F6A;
+    --teal: #38939B;
+    --dark-teal: #1B5957;
+    --gold: #E9A842;
+    --near-black: #231F20;
+    --light-teal-gray: #A4BDBC;
+    --light-blue-gray: #B9C7D4;
+    --off-white: #F1F1F2;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cabin', 'Segoe UI', sans-serif; background: var(--off-white); color: var(--near-black); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white; padding: 0;
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px; border-bottom: 3px solid var(--gold);
+  }
+  .logo-lockup { display: flex; align-items: center; gap: 14px; }
+  .logo-mark {
+    width: 46px; height: 46px; border-radius: 8px;
+    background: var(--gold); display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; color: var(--near-black); letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+  .logo-text { line-height: 1.2; }
+  .logo-text .firm { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px; }
+  .logo-text .tagline { font-size: 0.72rem; opacity: 0.75; letter-spacing: 1px; text-transform: uppercase; }
+  .header-badge {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 14px; border-radius: 99px; font-size: 0.75rem; letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .header-hero { padding: 32px 32px 36px; text-align: center; }
+  .header-hero h1 { font-size: 1.85rem; font-weight: 700; margin-bottom: 10px; }
+  .header-hero p { font-size: 0.95rem; opacity: 0.85; max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+  /* LAYOUT */
+  .container { max-width: 740px; margin: 32px auto; padding: 0 16px 60px; }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-bar-bg { background: var(--light-blue-gray); border-radius: 99px; height: 8px; }
+  .progress-bar { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--teal)); transition: width 0.4s ease; width: 0%; }
+  .progress-label { text-align: right; font-size: 0.8rem; color: #777; margin-top: 5px; }
+
+  /* SECTION CARDS */
+  .section-card {
+    background: var(--white); border-radius: 12px; padding: 28px;
+    margin-bottom: 22px; box-shadow: 0 2px 12px rgba(59,110,143,0.09);
+    border-left: 5px solid var(--primary);
+  }
+  .section-card.teal { border-left-color: var(--teal); }
+  .section-card.dark-teal { border-left-color: var(--dark-teal); }
+  .section-card.gold { border-left-color: var(--gold); }
+  .section-title { font-size: 1rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 3px; }
+  .section-subtitle { font-size: 0.83rem; color: #777; font-style: italic; margin-bottom: 20px; }
+
+  /* QUESTIONS */
+  .question { margin-bottom: 22px; }
+  .question label { display: block; font-size: 0.91rem; font-weight: 700; margin-bottom: 10px; color: var(--near-black); line-height: 1.4; }
+  .scale-row { display: flex; gap: 7px; flex-wrap: wrap; }
+  .scale-btn {
+    flex: 1; min-width: 54px; padding: 10px 5px;
+    border: 2px solid var(--light-blue-gray); border-radius: 8px;
+    background: var(--off-white); cursor: pointer; text-align: center;
+    font-size: 0.78rem; color: #666; font-family: 'Cabin', sans-serif;
+    transition: all 0.18s; line-height: 1.3;
+  }
+  .scale-btn:hover { border-color: var(--primary); background: #eaf1f7; }
+  .scale-btn.selected { border-color: var(--primary); background: var(--primary); color: white; font-weight: 700; }
+  .scale-btn span.num { display: block; font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+  .scale-legend { display: flex; justify-content: space-between; font-size: 0.72rem; color: #aaa; margin-top: 6px; }
+
+  /* BONUS */
+  .bonus-card {
+    background: #fffbef; border-left: 5px solid var(--gold);
+    border-radius: 12px; padding: 28px; margin-bottom: 22px;
+    box-shadow: 0 2px 12px rgba(233,168,66,0.1);
+  }
+  .bonus-card .section-title { color: #a06c10; }
+  .bonus-card textarea {
+    width: 100%; border: 2px solid #f0d89a; border-radius: 8px;
+    padding: 12px; font-size: 0.9rem; font-family: 'Cabin', sans-serif;
+    resize: vertical; min-height: 90px; background: #fffff8; color: var(--near-black); margin-top: 10px;
+  }
+  .bonus-card textarea:focus { outline: none; border-color: var(--gold); }
+
+  /* CONTACT FORM */
+  .contact-card {
+    background: var(--white); border-left: 5px solid var(--dark-teal);
+    border-radius: 12px; padding: 28px; margin-bottom: 22px;
+    box-shadow: 0 2px 12px rgba(27,89,87,0.09);
+  }
+  .contact-card .section-title { color: var(--dark-teal); }
+  .form-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+  .form-group { flex: 1; min-width: 200px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: #555; margin-bottom: 5px; letter-spacing: 0.3px; }
+  .form-group input, .form-group select {
+    width: 100%; border: 2px solid var(--light-blue-gray); border-radius: 8px;
+    padding: 10px 12px; font-size: 0.9rem; font-family: 'Cabin', sans-serif;
+    color: var(--near-black); background: var(--off-white); transition: border 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); }
+  .form-group.full { min-width: 100%; flex: 100%; }
+  .opt-in { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; }
+  .opt-in input[type=checkbox] { margin-top: 3px; accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0; }
+  .opt-in label { font-size: 0.82rem; color: #666; line-height: 1.4; }
+
+  /* SUBMIT */
+  .submit-btn {
+    display: block; width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white; font-size: 1.05rem; font-weight: 700; font-family: 'Cabin', sans-serif;
+    border: none; border-radius: 10px; cursor: pointer; letter-spacing: 0.5px;
+    transition: opacity 0.2s; border-bottom: 3px solid var(--gold);
+  }
+  .submit-btn:hover { opacity: 0.9; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* RESULTS */
+  #results { display: none; }
+  .result-card {
+    background: white; border-radius: 14px; padding: 36px;
+    text-align: center; box-shadow: 0 4px 20px rgba(59,110,143,0.12);
+    margin-bottom: 22px; border-top: 4px solid var(--gold);
+  }
+  .result-firm { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--light-teal-gray); margin-bottom: 6px; }
+  .result-score { font-size: 3rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 2px; }
+  .result-max { font-size: 0.95rem; color: #aaa; margin-bottom: 18px; }
+  .meter-wrap { background: var(--light-blue-gray); border-radius: 99px; height: 12px; margin: 16px 0 6px; }
+  .meter-bar { height: 12px; border-radius: 99px; transition: width 1.1s ease; }
+  .meter-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: #aaa; }
+  .result-badge {
+    display: inline-block; padding: 10px 28px; border-radius: 99px;
+    font-size: 1.3rem; font-weight: 700; margin: 18px 0 12px; letter-spacing: 0.3px;
+  }
+  .result-desc { font-size: 0.93rem; color: #4a5568; max-width: 500px; margin: 0 auto 20px; line-height: 1.65; }
+  .level-grid { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+  .level-pill {
+    padding: 6px 14px; border-radius: 99px; font-size: 0.77rem;
+    font-weight: 700; border: 2px solid transparent; opacity: 0.3;
+  }
+  .level-pill.active { opacity: 1; border-color: currentColor; }
+
+  /* CTA CARD */
+  .cta-card {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    border-radius: 12px; padding: 32px; color: white; text-align: center;
+    margin-bottom: 22px; box-shadow: 0 4px 16px rgba(59,110,143,0.2);
+  }
+  .cta-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  .cta-card p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 18px; line-height: 1.5; }
+  .cta-btn {
+    display: inline-block; padding: 12px 28px;
+    background: var(--gold); color: var(--near-black); font-weight: 700;
+    border-radius: 8px; font-family: 'Cabin', sans-serif; font-size: 0.95rem;
+    border: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.88; }
+
+  .bonus-result {
+    background: #fffbef; border-left: 5px solid var(--gold);
+    border-radius: 12px; padding: 24px; margin-bottom: 22px;
+  }
+  .bonus-result h4 { color: #a06c10; font-size: 0.95rem; margin-bottom: 8px; }
+  .bonus-result p { font-size: 0.9rem; color: #5a3e00; font-style: italic; line-height: 1.5; }
+
+  .restart-btn {
+    display: inline-block; padding: 12px 32px;
+    background: transparent; color: var(--primary); font-weight: 700; font-family: 'Cabin', sans-serif;
+    border: 2px solid var(--primary); border-radius: 10px; cursor: pointer;
+    font-size: 0.92rem; transition: all 0.2s;
+  }
+  .restart-btn:hover { background: var(--primary); color: white; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 24px; font-size: 0.78rem;
+    color: #999; border-top: 1px solid var(--light-blue-gray);
+    margin-top: 20px;
+  }
+  footer span { color: var(--primary); font-weight: 700; }
+
+  @media(max-width:520px) {
+    .header-top { padding: 14px 16px; }
+    .header-hero { padding: 24px 16px 28px; }
+    .header-hero h1 { font-size: 1.35rem; }
+    .scale-btn { min-width: 42px; font-size: 0.72rem; }
+    .header-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo-lockup">
+      <div class="logo-mark">MF</div>
+      <div class="logo-text">
+        <div class="firm">McLean Forrester</div>
+        <div class="tagline">Strategic Advisory</div>
+      </div>
+    </div>
+    <div class="header-badge">AI Maturity Assessment</div>
+  </div>
+  <div class="header-hero">
+    <h1>AI Adoption Survey for Small Businesses</h1>
+    <p>Discover your business's current AI maturity level — and where the biggest opportunities for growth exist. Takes about 5 minutes.</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- SURVEY -->
+  <div id="survey">
+    <div class="progress-wrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">0 of 22 answered</div>
+    </div>
+
+    <div class="section-card" id="card-section1">
+      <div class="section-title">Section 1 — Awareness &amp; Exploration</div>
+      <div class="section-subtitle">Basic exposure to AI tools</div>
+      <div id="q-section1"></div>
+    </div>
+    <div class="section-card teal" id="card-section2">
+      <div class="section-title">Section 2 — Productivity Enhancement</div>
+      <div class="section-subtitle">AI helping employees work faster</div>
+      <div id="q-section2"></div>
+    </div>
+    <div class="section-card dark-teal" id="card-section3">
+      <div class="section-title">Section 3 — Operational Integration</div>
+      <div class="section-subtitle">AI supporting business processes</div>
+      <div id="q-section3"></div>
+    </div>
+    <div class="section-card" id="card-section4">
+      <div class="section-title">Section 4 — Process Automation</div>
+      <div class="section-subtitle">AI driving workflows</div>
+      <div id="q-section4"></div>
+    </div>
+    <div class="section-card teal" id="card-section5">
+      <div class="section-title">Section 5 — Strategic AI Use</div>
+      <div class="section-subtitle">AI as a business capability</div>
+      <div id="q-section5"></div>
+    </div>
+
+    <div class="bonus-card">
+      <div class="section-title">⭐ Bonus Question</div>
+      <div class="section-subtitle">This often reveals your #1 AI opportunity</div>
+      <label style="font-size:0.91rem;font-weight:700;color:#2d3748;">What is the most repetitive task in your business that consumes significant time every week?</label>
+      <textarea id="bonusAnswer" placeholder="Describe your most time-consuming repetitive task…"></textarea>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div class="contact-card">
+      <div class="section-title">Your Information</div>
+      <div class="section-subtitle">So we can send your personalized results and resources</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="firstName" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="lastName" placeholder="Smith">
+        </div>
+        <div class="form-group full">
+          <label>Business Email *</label>
+          <input type="email" id="email" placeholder="jane@yourbusiness.com">
+        </div>
+        <div class="form-group">
+          <label>Company / Business Name</label>
+          <input type="text" id="company" placeholder="Acme Co.">
+        </div>
+        <div class="form-group">
+          <label>Industry</label>
+          <select id="industry">
+            <option value="">— Select —</option>
+            <option>Professional Services</option>
+            <option>Retail / E-Commerce</option>
+            <option>Healthcare / Wellness</option>
+            <option>Financial Services</option>
+            <option>Construction / Trades</option>
+            <option>Technology</option>
+            <option>Education / Training</option>
+            <option>Hospitality / Food & Beverage</option>
+            <option>Nonprofit</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Number of Employees</label>
+          <select id="empSize">
+            <option value="">— Select —</option>
+            <option>Just me (solopreneur)</option>
+            <option>2–10</option>
+            <option>11–50</option>
+            <option>51–200</option>
+            <option>200+</option>
+          </select>
+        </div>
+      </div>
+      <div class="opt-in">
+        <input type="checkbox" id="optIn" checked>
+        <label for="optIn">I'd like to receive McLean Forrester insights, AI adoption resources, and workshop invitations. You can unsubscribe at any time.</label>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" disabled onclick="showResults()">See My AI Maturity Score →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="result-card">
+      <div class="result-firm">McLean Forrester · AI Maturity Assessment</div>
+      <div class="result-score" id="resScore">0</div>
+      <div class="result-max">out of 110</div>
+      <div class="meter-wrap"><div class="meter-bar" id="resMeter"></div></div>
+      <div class="meter-labels"><span>0</span><span>27</span><span>55</span><span>82</span><span>110</span></div>
+      <div class="result-badge" id="resBadge">—</div>
+      <div class="result-desc" id="resDesc"></div>
+      <div class="level-grid" id="levelGrid"></div>
+    </div>
+
+    <div id="bonusDisplay" style="display:none;" class="bonus-result">
+      <h4>⭐ Your Identified Opportunity</h4>
+      <p id="bonusText"></p>
+    </div>
+
+    <div class="cta-card">
+      <h3>Ready to Move to the Next Level?</h3>
+      <p>McLean Forrester helps small and mid-size businesses build practical AI strategies that drive real results — without the complexity. Let's talk about your path forward.</p>
+      <button class="cta-btn" onclick="window.open('https://www.mcleanforrester.com','_blank')">Connect with McLean Forrester →</button>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="restart-btn" onclick="restart()">↩ Retake Survey</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 <span>McLean Forrester LLC</span> · All rights reserved · AI Adoption Maturity Assessment
+</footer>
+
+<script>
+const questions = {
+  section1: [
+    "I or my team have experimented with tools like ChatGPT, Claude, or Gemini.",
+    "We use AI to help write emails, documents, or marketing content.",
+    "We use AI to brainstorm ideas for marketing, products, or problem solving.",
+    "We use AI to summarize documents, notes, or meetings."
+  ],
+  section2: [
+    "AI assists with marketing content (blogs, social media, ads).",
+    "AI helps draft customer communication or sales responses.",
+    "AI assists with research, competitive analysis, or planning.",
+    "Employees regularly use AI tools during their daily work."
+  ],
+  section3: [
+    "AI helps automate repetitive administrative tasks.",
+    "AI tools help analyze business data or generate reports.",
+    "AI is used to assist customer support (chatbots, automated responses).",
+    "AI tools help generate proposals, quotes, or reports.",
+    "AI helps organize or manage internal knowledge and documentation."
+  ],
+  section4: [
+    "AI automates multi-step workflows across tools (CRM, marketing, support).",
+    "AI tools automatically generate or update internal documents or reports.",
+    "AI assists with sales lead qualification or customer segmentation.",
+    "AI tools are integrated with our CRM, accounting, or project systems."
+  ],
+  section5: [
+    "AI is used to identify growth opportunities or trends in business data.",
+    "AI helps personalize marketing or customer experiences.",
+    "AI tools assist with forecasting sales, demand, or financial performance.",
+    "We have defined processes or policies for how employees use AI.",
+    "AI initiatives are part of our strategic planning."
+  ]
+};
+
+const scaleLabels = ["Not Used","Experimenting","Occasional","Regular","Integrated"];
+const answers = {};
+let totalQuestions = 0;
+
+const levels = [
+  { label:"AI Curious",    min:0,   max:25,  color:"#718096", bg:"#edf2f7",
+    desc:"You're at the starting line — and that's perfectly fine. Most small business owners are just beginning to explore AI. The biggest opportunity ahead is picking one or two simple tools and experimenting without pressure." },
+  { label:"AI Explorer",   min:26,  max:50,  color:"#2b6cb0", bg:"#ebf8ff",
+    desc:"You've seen some early wins with AI. Now it's about building habits — making AI a regular part of how you and your team work each day, especially for content, communication, and customer outreach." },
+  { label:"AI Enabled",    min:51,  max:75,  color:"#276749", bg:"#f0fff4",
+    desc:"AI is genuinely saving you time and improving output quality. The next frontier is connecting tools together so they work as a system — reducing manual hand-offs and unlocking compounding efficiency." },
+  { label:"AI Integrated", min:76,  max:95,  color:"#744210", bg:"#fffaf0",
+    desc:"You've embedded AI into your operations in meaningful ways. Now it's time to think strategically — using AI not just to save time, but to find growth, spot trends, and personalize customer experiences." },
+  { label:"AI Driven",     min:96,  max:110, color:"#553c9a", bg:"#faf5ff",
+    desc:"You're operating at the leading edge of AI adoption for small business. AI is woven into your strategy, not just your tasks. Focus now on governance, measurement, and maintaining your competitive edge." }
+];
+
+function buildSections() {
+  Object.entries(questions).forEach(([sec, qs]) => {
+    const container = document.getElementById(`q-${sec}`);
+    qs.forEach((q, i) => {
+      const id = `${sec}_${i}`;
+      totalQuestions++;
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<label>${totalQuestions}. ${q}</label>
+        <div class="scale-row" id="row_${id}">
+          ${[1,2,3,4,5].map(n => `<button class="scale-btn" onclick="select('${id}',${n},this)" type="button">
+            <span class="num">${n}</span>${scaleLabels[n-1]}
+          </button>`).join('')}
+        </div>
+        <div class="scale-legend"><span>Not Used</span><span>Fully Integrated</span></div>`;
+      container.appendChild(div);
+    });
+  });
+}
+
+function select(id, val, btn) {
+  answers[id] = val;
+  document.getElementById(`row_${id}`).querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = Object.keys(answers).length;
+  const pct = (answered / totalQuestions) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} of ${totalQuestions} answered`;
+  const fname = document.getElementById('firstName').value.trim();
+  const lname = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  document.getElementById('submitBtn').disabled = !(answered === totalQuestions && fname && lname && email);
+}
+
+['firstName','lastName','email'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateProgress);
+});
+
+function showResults() {
+  const total = Object.values(answers).reduce((a,b) => a+b, 0);
+  const level = levels.find(l => total >= l.min && total <= l.max) || levels[0];
+  const pct = (total / 110) * 100;
+
+  document.getElementById('resScore').textContent = total;
+  const meter = document.getElementById('resMeter');
+  meter.style.background = `linear-gradient(90deg, #3B6E8F, ${level.color})`;
+  setTimeout(() => { meter.style.width = pct + '%'; }, 80);
+
+  const badge = document.getElementById('resBadge');
+  badge.textContent = level.label;
+  badge.style.background = level.bg;
+  badge.style.color = level.color;
+
+  document.getElementById('resDesc').textContent = level.desc;
+
+  document.getElementById('levelGrid').innerHTML = levels.map(l =>
+    `<span class="level-pill ${l.label===level.label?'active':''}" style="background:${l.bg};color:${l.color};">${l.label}</span>`
+  ).join('');
+
+  const bonus = document.getElementById('bonusAnswer').value.trim();
+  if (bonus) {
+    document.getElementById('bonusText').textContent = `"${bonus}"`;
+    document.getElementById('bonusDisplay').style.display = 'block';
+  }
+
+  document.getElementById('survey').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('bonusAnswer').value = '';
+  document.getElementById('survey').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildSections();
+updateProgress();
+</script>
+</body>
+</html>
